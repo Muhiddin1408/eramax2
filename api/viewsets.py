@@ -425,6 +425,7 @@ class ProductFilialViewset(viewsets.ModelViewSet):
     def by_filial(self, request):
         id = request.GET.get('f')
         d = ProductFilial.objects.filter(filial_id=id)
+        print(d, 'klklkl')
 
         page = self.paginate_queryset(d)
         if page is not None:
@@ -816,10 +817,10 @@ class ReceiveItemViewset(viewsets.ModelViewSet):
         FakturaItem.objects.create(
             faktura_id=request.GET.get("faktura"),
             product_id=request.GET.get("product"),
-            som=product1.som,
-            dollar=product1.dollar,
-            body_som=product1.sotish_som,
-            body_dollar=product1.sotish_dollar,
+            som=product1.sotish_som,
+            dollar=product1.sotish_dollar,
+            body_som=product1.som,
+            body_dollar=product1.dollar,
             quantity=request.GET.get("quantity"),
             expired_date=product1.expired_date,
             price_diff=product1.sotish_som - product1.som,
@@ -1274,7 +1275,10 @@ class ShopViewset(viewsets.ModelViewSet):
                 #date = r.get('date')
                 # new
                 debt_return = r.get("debt_return", None)
+                print(r.get("dollar_rate"))
                 rate = r.get("dollar_rate")
+                print('1')
+
                 with transaction.atomic():
                     filial_obj = Filial.objects.get(id=filial)
                     if naqd_som:
@@ -1294,6 +1298,7 @@ class ShopViewset(viewsets.ModelViewSet):
                     nasiya_som = r["nasiya_som"]
                     nasiya_dollar = r["nasiya_dollar"]
                     fio = request.data.get('fio')
+                    print('2', rate)
                     sh = Shop.objects.create(
                         naqd_som=naqd_som,
                         naqd_dollar=naqd_dollar,
@@ -1965,8 +1970,10 @@ class HisobdanChiqarishOmborViewset(viewsets.ModelViewSet):
 
     @action(methods=['post'], detail=False)
     def by_id(self, request):
-        # id = int(request.GET.get('f'))
-        product = int(request.GET.get('product'))
+        id = int(request.GET.get('f'))
+        print(request.GET.get('product'))
+        product = int(request.GET.get('f'))
+        print(product)
         resive = ReceiveItem.objects.filter(product_id=product)
         resive_sum = resive.aggregate(foo=Coalesce(
             Sum('quantity'),

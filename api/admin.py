@@ -9,7 +9,7 @@ admin.site.index_title = "Eramax API"
 
 admin.site.unregister(Group)
 admin.site.register(Kamomad)
-admin.site.unregister(User)
+# admin.site.unregister(User)
 
 admin.site.register(MobilUser)
 admin.site.register(MyOwnToken)

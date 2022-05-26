@@ -2,7 +2,7 @@ from datetime import date
 # from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.functions import Coalesce
-from django.db.models import Sum, Q, F
+from django.db.models import Sum, Q, F, FloatField
 from django.utils import timezone
 
 
@@ -233,7 +233,7 @@ class Receive(models.Model):
     def get_total_arrival_price(self):
         return self.items.aggregate(foo=Coalesce(
             Sum(F('dollar') * F('quantity')),
-            0
+            0, output_field=FloatField()
         ))['foo']
 
     @property
@@ -301,35 +301,35 @@ class Faktura(models.Model):
     def get_total_arrival_price(self):
         return self.items.aggregate(foo=Coalesce(
             Sum(F('body_dollar') * F('quantity')),
-            0
+            0, output_field=FloatField()
         ))['foo']
 
     @property
     def get_total_arrival_price_som(self):
         return self.items.aggregate(foo=Coalesce(
             Sum(F('body_som') * F('quantity')),
-            0
+            0, output_field=FloatField()
         ))['foo']
 
     @property
     def get_total_selling_price(self):
         return self.items.aggregate(foo=Coalesce(
             Sum(F('dollar') * F('quantity')),
-            0
+            0, output_field=FloatField()
         ))['foo']
 
     @property
     def get_total_selling_price_som(self):
         return self.items.aggregate(foo=Coalesce(
             Sum(F('som') * F('quantity')),
-            0
+            0, output_field=FloatField()
         ))['foo']
 
     @property
     def get_total_diff(self):
         return self.items.aggregate(foo=Coalesce(
             Sum(F('price_diff') * F('quantity'), output_field=models.DecimalField(decimal_places=2)),
-            0
+            0, output_field=FloatField()
         ))['foo']
 
 

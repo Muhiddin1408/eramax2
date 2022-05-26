@@ -83,12 +83,13 @@ WSGI_APPLICATION = "domstroy.wsgi.application"
 #    }
 # }
 
+AUTH_USER_MODEL = 'main.User'
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-        "ATOMIC_REQUESTS": True
+        # "ATOMIC_REQUESTS": True
     }
    
 }
@@ -227,19 +228,19 @@ MEDIA_ROOT = BASE_DIR / "media"
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_HEADERS = (
-    "x-requested-with",
-    "accept",
-    "origin",
-    "authorization",
-    "x-csrftoken",
-    "token",
-    "x-device-id",
-    "x-device-type",
-    "x-push-id",
-    "dataserviceversion",
-    "maxdataserviceversion",
-)
+# CORS_ALLOW_HEADERS = (
+#     "x-requested-with",
+#     "accept",
+#     "origin",
+#     "authorization",
+#     "x-csrftoken",
+#     "token",
+#     "x-device-id",
+#     "x-device-type",
+#     "x-push-id",
+#     "dataserviceversion",
+#     "maxdataserviceversion",
+# )
 CORS_ALLOW_METHODS = ("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
 
 # LOGGING = {

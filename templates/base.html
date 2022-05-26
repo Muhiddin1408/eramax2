@@ -98,7 +98,7 @@
 
             <div class="shadow-bottom"></div>
             <ul class="list-unstyled menu-categories" id="accordionExample">
-
+                {% if user.biznes_tahli%}
                 <li class="menu {{ home }}">
                     <a href="{% url 'home' %}" aria-expanded="{{ home_t }}" class="dropdown-toggle">
                         <div class="">
@@ -112,6 +112,7 @@
                         </div>
                     </a>
                 </li>
+                {% endif %}
 
                 <!-- <li class="menu {{ product }}">
                     <a href="#product-components" data-toggle="collapse" aria-expanded="{{ product_t }}" class="dropdown-toggle">
@@ -141,7 +142,7 @@
                         </li>
                     </ul>
                 </li> -->
-
+                {% if user.mahsulot_boshqaruvi%}
                 <li class="menu {{ product }}">
                     <a href="#product-components" data-toggle="collapse" aria-expanded="{{ product_t }}" class="dropdown-toggle" style="padding-right: 0">
                         <div class="">
@@ -171,7 +172,8 @@
                         </li>
                     </ul>
                 </li>
-
+                {% endif %}
+                {% if user.savdo_tahli%}
                 <li class="menu {{ savdo_tahlil }}">
                     <a href="{% url 'savdo-tahlil' %}" aria-expanded="{{ savdo_tahlil_t }}" class="dropdown-toggle">
                         <div class="">
@@ -185,6 +187,8 @@
                         </div>
                     </a>
                 </li>
+                {% endif %}
+                {% if user.ltv_tahli%}
                 <li class="menu {{ ltv }}">
                     <a href="{% url 'ltv' %}" aria-expanded="{{ ltv_t }}" class="dropdown-toggle">
                         <div class="">
@@ -198,7 +202,8 @@
                         </div>
                     </a>
                 </li>
-
+                {% endif %}
+                {% if user.kassa %}
                 <li class="menu {{ kassa }}">
                     <a href="{% url 'kassa' %}" aria-expanded="{{ kassa_t }}" class="dropdown-toggle">
                         <div class="feather feather-layers">
@@ -214,7 +219,8 @@
                         </div>
                     </a>
                 </li>
-                
+                {% endif %}
+                {% if user.filial_boshqaruvi%}
                 <li class="menu {{ filial }}">
                     <a href="#filial-components" data-toggle="collapse" aria-expanded="{{ filial_t }}" class="dropdown-toggle">
                         <div class="">
@@ -244,6 +250,7 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
                 <!-- <li class="menu {{ saler }}">
                     <a href="{% url 'saler' %}" aria-expanded="{{ saler_t }}" class="dropdown-toggle">
                         <div class="">
@@ -259,6 +266,7 @@
                         </div>
                     </a>
                 </li> -->
+                {% if user.kadrlar %}
                 <li class="menu {{ hodim }}">
                     <a href="{% url 'hodim' %}" aria-expanded="{{ hodim_t }}" class="dropdown-toggle">
                         <div class="">
@@ -274,6 +282,9 @@
                         </div>
                     </a>
                 </li>
+                {% endif %}
+
+                {% if user.mijozlar_qardorligi %}
                 <li class="menu {{ debtor }}">
                     <a href="{% url 'debtor' %}" aria-expanded="{{ debtor_t }}" class="dropdown-toggle">
                         <div class="">
@@ -289,6 +300,8 @@
                         </div>
                     </a>
                 </li>
+                {% endif %}
+                {% if user.yetkazib_beruvchilar %}
                 <li class="menu {{ deliver }}">
                     <a href="{% url 'deliver' %}" aria-expanded="{{ deliver_t }}" class="dropdown-toggle">
                         <div class="">
@@ -304,6 +317,8 @@
                         </div>
                     </a>
                 </li>
+                {% endif %}
+                {% if user.ombor_boshqaruvi %}
                 <li class="menu {{ ombor }}">
                     <a href="#components" data-toggle="collapse" aria-expanded="{{ ombor_t }}" class="dropdown-toggle">
                         <div class="">
@@ -348,7 +363,8 @@
                         </li> -->
                     </ul>
                 </li>
-                
+                {% endif %}
+                {% if user.faktura_yoqlama %}
                 <li class="menu {{ faktura_yoqlama }} ">
                     <a href="{% url 'faktura_yoqlama' %}" aria-expanded="{{ faktura_yoqlama_t }}" class="dropdown-toggle">
                         <div class="">
@@ -364,7 +380,7 @@
                         </div>
                     </a>
                 </li>
-
+                {% endif %}
                 <!-- <li class="menu">
                     <a href="{% url 'kurs_page' %}" aria-expanded="" class="dropdown-toggle">
                         <div class="">
