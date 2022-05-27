@@ -1212,9 +1212,15 @@ def checkPhone(phone):
 def schedular_sms_send_oldi(nasiya_dollar, filial_name, id, jami_qarz):
     text = settings.GET_DEBTOR_SMS
     debtor = Debtor.objects.get(id=id)
-    phones = UserProfile.objects.filter(filial__name=filial_name).values_list('phone', flat=True)
+    print('123', debtor)
+    filial = Filial.objects.filter(name=filial_name).last()
+    print(filial.name)
+    phones = UserProfile.objects.filter(filial_id=filial.id).values_list('phone', flat=True)
+    print(phones)
     sms_text = sms_text_replace(text, nasiya_dollar, filial_name, debtor, jami_qarz, phones)
+    print(sms_text)
     can, phone = checkPhone(debtor.phone1)
+    print(can)
     if can:
         sendSmsOneContact(debtor.phone1, sms_text)
 
@@ -1270,6 +1276,7 @@ class ShopViewset(viewsets.ModelViewSet):
                 skidka_som = r.get("skidka_som")
                 skidka_dollar = r["skidka_dollar"]
                 filial = r["filial"]
+                print(filial)
                 saler = r.get("saler")
                 cart = r.get("cart")
                 #date = r.get('date')
@@ -1298,7 +1305,7 @@ class ShopViewset(viewsets.ModelViewSet):
                     nasiya_som = r["nasiya_som"]
                     nasiya_dollar = r["nasiya_dollar"]
                     fio = request.data.get('fio')
-                    print('2', rate)
+                    print('2', fio)
                     sh = Shop.objects.create(
                         naqd_som=naqd_som,
                         naqd_dollar=naqd_dollar,
@@ -1336,20 +1343,43 @@ class ShopViewset(viewsets.ModelViewSet):
                                 product.save()
 
                     phone = request.data.get('phone')
+                    print(phone)
                     if phone is not None:
                         if phone.startswith("+"):
                             phone = phone[1:]
 
                     if fio is not None:
-                        d, created = Debtor.objects.get_or_create(fio=fio, phone1=phone)
-                        d.som += float(nasiya_som)
-                        d.dollar += float(nasiya_dollar)
-                        # new sms
-                        d.debt_return = debt_return
-                        d.last_filial_id = filial
-                        d.save()
-                        #new sms
-                        schedular_sms_send_oldi(nasiya_dollar, filial_obj.name, d.id, d.dollar)
+                        filial_id = Filial.objects.get(id=filial)
+                        print(filial_id.id, "Filial")
+                        debtor = Debtor.objects.filter(fio=fio, phone1=phone).last()
+                        if debtor:
+                            print(debtor)
+                            debtor.som += float(nasiya_som)
+                            debtor.dollar += float(nasiya_dollar)
+                            debtor.debt_return = debt_return
+                            debtor.save()
+                        else:
+                            debtor = Debtor.objects.create(
+                                fio=fio, phone1=phone, last_filial_id=filial_id.id,
+                                som=float(nasiya_som), dollar=float(nasiya_dollar),
+                                debt_return=debt_return
+                            )
+                        # d, created = Debtor.objects.get_or_create(fio=fio, phone1=phone, last_filial_id=filial_id.id)
+                        # print(d)
+                        # d.som += float(nasiya_som)
+                        # print('qw',)
+                        # d.dollar += float(nasiya_dollar)
+                        # # new sms
+                        # d.debt_return = debt_return
+                        # # d.last_filial = filial
+                        # d.save()
+                        # #new sms
+                        "nasiya_dollar, filial_name, id, jami_qarz"
+                        filial_name = filial_obj.name
+                        id = debtor.id
+                        jami_qarz = debtor.dollar
+                        schedular_sms_send_oldi(nasiya_dollar, filial_name, id, jami_qarz)
+                    print('p')
                     return Response({'message': 'Shop qo`shildi. Debtor yangilandi'}, status=200)
             except Exception as e:
                 return Response(

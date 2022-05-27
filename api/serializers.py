@@ -48,8 +48,10 @@ class DeliverSerializer(serializers.ModelSerializer):
 
 
 class ProductFilialSerializer(serializers.ModelSerializer):
+    group = serializers.ReadOnlyField(source='group.name')
     class Meta:
         model = ProductFilial
+        print()
         fields = (
             'id',
             'name',
@@ -61,6 +63,7 @@ class ProductFilialSerializer(serializers.ModelSerializer):
             'kurs',
             'barcode',
             'group',
+            'filial',
             'measurement',
             'min_count',
             'quantity',

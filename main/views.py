@@ -1931,14 +1931,14 @@ def get_savdo_tahlil(request):
         jami_qoldiq_sotish_som = productfilials.filter(filial=branch).aggregate(
             foo=Sum(F("sotish_som")*F("quantity")))['foo']
         jami_qoldiq_sotish_dollar = productfilials.filter(filial=branch).aggregate(
-            foo=Sum(F("sotish_dollar")*F("quantity")))['foo']
+            foo=Sum(F("sotish_dollar")*F("quantity"),output_field=FloatField()))['foo']
         jami_sotilgan_mahsulot_som = shops.filter(filial=branch).aggregate(foo=Sum(
-            F("naqd_som")+F("nasiya_som")-F("skidka_som")
+            F("naqd_som")+F("nasiya_som")-F("skidka_som"),output_field=FloatField()
         ))['foo']
 
         jami_sotilgan_mahsulot_dollar = shops.filter(filial=branch).aggregate(foo=Sum(
             F("naqd_dollar")+F("transfer")+F("plastik") +
-            F("nasiya_dollar")-F("skidka_dollar")
+            F("nasiya_dollar")-F("skidka_dollar"),output_field=FloatField()
         ))['foo']
 
         if jami_sotilgan_mahsulot_dollar is None:

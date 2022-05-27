@@ -539,8 +539,6 @@ class ChangePriceItem(models.Model):
     # quantity = models.FloatField(default=0)
     barcode = models.CharField(max_length=125, default='')
 
-    def __str__(self):
-        return self.filial.name
 
     class Meta:
         verbose_name_plural = 'ChangePriceIten'
